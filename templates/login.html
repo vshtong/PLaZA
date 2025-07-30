@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 2.4em;">Passwordless Login</h1>
+    {% if avg_sign_time %}
+        <p class="benchmark" style="font-size: 1.3em;">Initial Benchmarking Result: {{ avg_sign_time }}</p>
+    {% endif %}
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    {% if step == "sign" %}
+        <div class="info-box" style="font-size: 1.4em;">
+            <p style="font-weight: 600;">Selected Dilithium Variant: {{ session.variant }}</p>
+            <p>Run below command in a terminal:</p>
+            <code>python client.py {{ session.user_id }} {{ challenge }} {{ session.variant }}</code>
+        </div>
+        <form method="post" action="{{ url_for('verify') }}" class="form">
+            <label for="signature">Signature</label>
+            <input type="text" id="signature" name="signature" required placeholder="Paste signature here">
+            <button type="submit" class="action-button">Verify</button>
+        </form>
+    {% else %}
+        <form method="post" class="form">
+            <label for="user_id">User ID:</label>
+            <input type="text" id="user_id" name="user_id" required  placeholder="Enter your id here" >
+            <button type="submit" class="action-button">Get Challenge</button>
+        </form>
+    {% endif %}
+{% endblock %}

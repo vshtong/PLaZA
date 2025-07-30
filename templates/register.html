@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 2.4em;">Register</h1>
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+    <form method="post" class="form">
+        <label for="user_id">User ID (e.g., "test@email.com", "username23"):</label>
+        {% if skey %}
+            <p style="color: #07d300;" class="skey">Your private key has been stored in your local directory: {{ skey }}</p>
+        {% endif %}
+        <input type="text" id="user_id" name="user_id" required  placeholder="Enter your new id here" >
+        <button type="submit" class="action-button">Register</button>
+    </form>
+{% endblock %}

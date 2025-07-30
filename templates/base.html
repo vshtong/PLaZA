@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-brand">(PLaZA) Passwordless Lattice-based Zero Knowledge Web Application</div>
+        <div class="navbar-links">
+            <a href="{{ url_for('index') }}" class="nav-button">Login</a>
+            <a href="{{ url_for('register') }}" class="nav-button">Register</a>
+            <a href="{{ url_for('variant_selection') }}" class="nav-button">Select Variant</a>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>

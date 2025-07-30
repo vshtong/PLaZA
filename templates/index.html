@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1 style="font-size: 2.4em;">Welcome, {{ user_id }}!</h1>
+    <p style="font-size: 1.7em;">You have been authenticated using Lattice-based Passwordlss ZKP cryptography.</p>
+    <a href="{{ url_for('logout') }}" class="action-button">Logout</a>
+{% endblock %}
+
+<!--
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZKP Authentication</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="tabs">
+            <button id="loginTab" class="active" onclick="showTab('login')">Login</button>
+            <button id="registerTab" onclick="showTab('register')">Register</button>
+        </div>
+
+        <div class="form-container">
+            <div id="loginContainer" class="form active-form">
+                <h3>K24087803</h3>
+                <h2>ZKP Login</h2>
+                {% if error %}
+                    <p class="error">{{ error }}</p>
+                {% endif %}
+                <form method="POST" action="/login">
+                    <input type="text" name="username" placeholder="Enter username" required>
+                    <input type="text" name="proof" placeholder="Enter your ZKP" required>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+
+            <div id="registerContainer" class="form">
+                <h2>ZKP Register</h2>
+                <form method="POST" action="/register">
+                    <input type="text" name="username" placeholder="Choose a username" required>
+                    <input type="password" name="password" placeholder="Choose a password" required>
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tab) {
+            document.getElementById("loginContainer").classList.toggle("active-form", tab === 'login');
+            document.getElementById("registerContainer").classList.toggle("active-form", tab === 'register');
+            document.getElementById("loginTab").classList.toggle("active", tab === 'login');
+            document.getElementById("registerTab").classList.toggle("active", tab === 'register');
+        }
+    </script>
+</body>
+</html>
+-->
