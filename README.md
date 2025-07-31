@@ -30,6 +30,8 @@
       - git clone https://github.com/open-quantum-safe/liboqs-python.git
       - cd liboqs-python
       - pip install .
+  - Other dependencies
+      - pip install flask, flask_session
   - **Installation is now complete.**
 
-### Run the 
+### Now run the plaza-app.py
