@@ -87,7 +87,7 @@ def verify():
     public_key, _ = get_user_data(user_id)
     
     # Initialize signature object with correct variant
-    crypto_verify = LatticeCrypto() if variant == crypto.algorithm else Signature(variant)
+    crypto_verify = LatticeCrypto() if variant != crypto.algorithm else crypto
     if crypto_verify.verify(challenge, signature, public_key):
         session_token = secrets.token_hex(16)
         expiry = int(time.time()) + 30  # 0.5 hour expiry
