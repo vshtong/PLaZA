@@ -17,6 +17,7 @@ crypto = LatticeCrypto()
 @app.route("/")
 def idx():
     #render_template("login.html", avg_sign_time=crypto.avg_sign_time)
+    print("os.getcwd: {}".format(os.getcwd()))
     return redirect(url_for("login")) 
 
 @app.route("/register", methods=["GET", "POST"])
@@ -42,9 +43,12 @@ def login():
     """
     Handles login page logic with /login route supports both GET and POST.
     """
+
     if request.method == "POST":
         user_id = request.form["user_id"]
+        print("userrrr: {}".format(user_id))
         public_key, variant = get_user_data(user_id)
+        print("variant_selection: {}".format(variant))
         if not public_key:
             return render_template("login.html", error="User not found")
         
@@ -52,9 +56,11 @@ def login():
         challenge = secrets.token_bytes(32)
         session["challenge"] = challenge
         session["user_id"] = user_id
-        session["variant"] = variant  # Store variant for verification
+        session["variant_selection"] = variant  # Store variant for verification
         return render_template("login.html", challenge=challenge.hex(), step="sign")
-    
+    if len(session) < 2:
+        session["variant_selection"] = crypto.algorithm
+    print(session)
     return render_template("login.html", avg_sign_time=crypto.avg_sign_time)
 
 @app.route("/verify", methods=["POST"])
@@ -65,7 +71,7 @@ def verify():
     """
     user_id = session.get("user_id")
     challenge = session.get("challenge")
-    variant = session.get("variant")
+    variant = session.get("variant_selection")
     if not user_id or not challenge or not variant:
         #return redirect(url_for("login"))
         return render_template("login.html", error="Invalid user/challenge, try again...", 
@@ -103,6 +109,7 @@ def logout():
     if session_token:
         delete_session(session_token)  # Removes user's session from database
     session.clear()  # Clear Flask session
+    remove_files()
     return redirect(url_for("index"))
 
 @app.route("/index")
@@ -121,6 +128,33 @@ def index():
     
     return render_template("index.html", user_id=user_id)
 
+
+@app.route("/variant_selection", methods=["POST"])
+def variant_selection():
+    """Handle user selection of a Dilithium variant."""
+    variant = request.form.get("variant_selection", "Auto").strip()
+    try:
+        if variant != "Auto" and variant not in ["Dilithium2", "Dilithium3", "Dilithium5"]:
+            return render_template("login.html", error="Invalid variant selected. Please choose a valid option.", current_variant=session.get("variant_selection", "Auto"))
+        session["variant_selection"] = variant
+        global crypto
+        crypto = LatticeCrypto(variant)
+        return redirect(request.referrer or url_for("login"))
+    except Exception as e:
+        print("Variant selection error: {}".format(e))
+        return render_template("login.html", error="Failed to select variant. Please try again.", current_variant=session.get("variant_selection", "Auto"))
+
+
+def remove_files():
+    folder_path = os.path.join(os.getcwd(), "flask_session")
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+
+
 if __name__ == "__main__":
     init_db() # Initialises database connection
+    remove_files() # remove old flask sessions
     app.run(ssl_context="adhoc", debug=True)  # testingf

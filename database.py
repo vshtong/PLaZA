@@ -96,11 +96,11 @@ def get_all_users():
     """
     conn = sqlite3.connect("auth.db")
     c = conn.cursor()
-    c.execute("SELECT * FROM users")
+    c.execute("SELECT user_id, variant FROM users")
     result = c.fetchall()
     conn.close()
     return result
 
 if __name__ == "__main__":
     init_db()
-    print(get_all_users()[1])
+    print(get_all_users())

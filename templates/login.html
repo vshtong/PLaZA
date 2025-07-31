@@ -6,15 +6,15 @@
     <h1 style="font-size: 2.4em;">Passwordless Login</h1>
     {% if avg_sign_time %}
         <p class="benchmark" style="font-size: 1.3em;">Initial Benchmarking Result: {{ avg_sign_time }}</p>
+        <p style="font-weight: 600;">Selected Dilithium Variant: {{ session.variant_selection }}</p>
     {% endif %}
     {% if error %}
         <p class="error">{{ error }}</p>
     {% endif %}
     {% if step == "sign" %}
         <div class="info-box" style="font-size: 1.4em;">
-            <p style="font-weight: 600;">Selected Dilithium Variant: {{ session.variant }}</p>
             <p>Run below command in a terminal:</p>
-            <code>python client.py {{ session.user_id }} {{ challenge }} {{ session.variant }}</code>
+            <code>python client.py {{ session.user_id }} {{ challenge }} {{ session.variant_selection }}</code>
         </div>
         <form method="post" action="{{ url_for('verify') }}" class="form">
             <label for="signature">Signature</label>

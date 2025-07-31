@@ -10,7 +10,15 @@
         <div class="navbar-links">
             <a href="{{ url_for('index') }}" class="nav-button">Login</a>
             <a href="{{ url_for('register') }}" class="nav-button">Register</a>
-            <a href="{{ url_for('variant_selection') }}" class="nav-button">Select Variant</a>
+            <a href="{{ url_for('logout') }}" class="nav-button">Logout</a>
+            <form method="post" action="{{ url_for('variant_selection') }}" class="variant-form">
+                <select name="variant_selection" onchange="this.form.submit()" aria-label="Select Dilithium Variant">
+                    <option value="Auto" {% if session.get('variant_selection', 'Auto') == 'Auto' %}selected{% endif %}>Auto</option>
+                    <option value="Dilithium2" {% if session.get('variant_selection') == 'Dilithium2' %}selected{% endif %}>Dilithium2</option>
+                    <option value="Dilithium3" {% if session.get('variant_selection') == 'Dilithium3' %}selected{% endif %}>Dilithium3</option>
+                    <option value="Dilithium5" {% if session.get('variant_selection') == 'Dilithium5' %}selected{% endif %}>Dilithium5</option>
+                </select>
+            </form>
         </div>
     </nav>
     <div class="container">

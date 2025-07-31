@@ -11,7 +11,7 @@ class LatticeCrypto:
         self.variants = ["Dilithium2", "Dilithium3", "Dilithium5"]
 
         # Select variant based on device performance
-        if algo_variant in ["", None]:
+        if algo_variant in ["", "Auto", None]:
             self.algorithm = self.algorithm_benchmark()
         else:
             if algo_variant not in self.variants: # Checks if specified Dilithium is a valid variant
@@ -21,10 +21,9 @@ class LatticeCrypto:
                                 )
                 )
             self.algorithm = algo_variant
-        algorithm = "Dilithium3"
-        self.sig = Signature(algorithm)
-        self.display_dilithium_specs(algorithm, self.sig)
-        print("Selected Dilithium variant: {}".format(algorithm))
+        self.sig = Signature(self.algorithm)
+        self.display_dilithium_specs(self.algorithm, self.sig)
+        print("Selected Dilithium variant: {}".format(self.algorithm))
     
 
     def algorithm_benchmark(self):
@@ -91,14 +90,14 @@ class LatticeCrypto:
             details = sig.details
             
             # Print relevant specifications
-            print(f"\nSpecifications for {variant}:")
-            print(f"Claimed NIST Security Level: {details['claimed_nist_level']}")
-            print(f"Public Key Size: {details['length_public_key']} bytes")
-            print(f"Private Key Size: {details['length_secret_key']} bytes")
-            print(f"Signature Size: {details['length_signature']} bytes")
+            print("\nSpecifications for {}:".format(variant))
+            print("Claimed NIST Security Level: {}".format(details['claimed_nist_level']))
+            print("Public Key Size: {} bytes".format(details['length_public_key']))
+            print("Private Key Size: {} bytes".format(details['length_secret_key']))
+            print("Signature Size: {} bytes".format(details['length_signature']))
             
         except Exception as e:
-            print(f"Error retrieving specs for {variant}: {e}")
+            print("Error retrieving specs for {variant}: {e}")
 
 
 def save_private_key(user_id, private_key):
