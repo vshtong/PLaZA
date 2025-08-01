@@ -1,7 +1,6 @@
-# PLaZA - Passwordless Lattice-based Zero Knowledge Web Application
+# PLaZA: Password-less Lattice-based Zero Knowledge Web Application
 
 ## Setup for Windows
-#### For Linux, follow
 
 ### Prerequisites
 - **CMake**: Install from https://cmake.org/download/
@@ -37,3 +36,5 @@
   - Now run the plaza-app.py
       - Allow whatever automatic installation appears after running our "plaza-app.py"
   - **Installation is now complete.**
+
+#### For Linux steps, follow original liboqs' setup instructions: https://github.com/open-quantum-safe/liboqs-python
