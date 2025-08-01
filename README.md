@@ -1,4 +1,4 @@
-# PLaZA: Password-less Lattice-based Zero Knowledge Web Application
+# PLaZA: Passwordless Lattice-based Zero Knowledge Web Application
 
 ## Setup for Windows
 
