@@ -36,5 +36,3 @@
   - Now run the plaza-app.py
       - Allow whatever automatic installation appears after running our "plaza-app.py"
   - **Installation is now complete.**
-
-#### For Linux steps, follow original liboqs' setup instructions: https://github.com/open-quantum-safe/liboqs-python
