@@ -9,7 +9,7 @@
 - **Visual Studio**: Install Community 2022 with and in the installer select "Desktop development with C++" workload (includes MSVC compiler).
 - Donwload Git
 - Download and install OpenSSL from https://slproweb.com/products/Win32OpenSSL.html
-    - (Optional if doesnt work) Add to PATH
+    - Add to PATH. (optional)
 - **Admin Access**: Some steps may need admin rights.
 
 ### Steps
