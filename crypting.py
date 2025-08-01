@@ -6,6 +6,10 @@ import numpy as np
 
 class LatticeCrypto:
     def __init__(self, algo_variant=None):
+        """
+        Initialises the LatticeCrypto class for OOP and importing in other classes
+        """
+
         # Available Dilithium variants with increasing security and computational cost
         self.avg_sign_time = None
         self.variants = ["Dilithium2", "Dilithium3", "Dilithium5"]
@@ -29,6 +33,8 @@ class LatticeCrypto:
     def algorithm_benchmark(self):
         """
         Benchmark the device and select Dilithium variant based on computational capacity.
+        :return: str
+            Returns the dilithium variant
         """
 
         # Perform a test signing operation with Dilithium2 (fastest)
@@ -60,30 +66,75 @@ class LatticeCrypto:
     def generate_keypair(self):
         """
         Generate a Dilithium key pair using selected variant.
+        :return:public_key
+        :return:private_key
         """
-        return self.sig.generate_keypair(), self.sig.secret_key
+
+        # Record the start time of key-pair generation
+        start_time = time.time()
+
+        # Generate keypair and store public key
+        pub_key = self.sig.generate_keypair()
+        
+        # Compute the total computation time and output result
+        computation_time = (time.time() - start_time)
+        print("Key-pair Computation Duration: {}".format(computation_time))
+        
+        # Display the length of public and private key length for comparison
+        print("Generated Public Key Length: {}".format(len(pub_key)))
+        print("Generated Private Key Length: {}".format(len(self.sig.secret_key)))
+        return pub_key, self.sig.secret_key
     
     def sign(self, message, private_key):
         """
-        Sign a message using the private key.
+        Signs a challenge using the private key.
+        :return:signature
+
         """
+        # Record the start time of signature generation
+        start_time = time.time()
+
+        # signature generation
         self.sig.secret_key = private_key
-        return self.sig.sign(message)
+        signature = self.sig.sign(message)
+
+        # Compute the total computation time and output result
+        computation_time = (time.time() - start_time)
+        print("Signature Computation Duration: {}".format(computation_time))
+        
+        # Display the signature length for comparison
+        print("Generated signature length: {}".format(len(signature)))
+
+        return signature
     
-    def verify(self, message, signature, public_key):
+    def verify(self, challenge, signature, public_key):
         """
         Verify a signature using the public key.
+        :return: boolean
+            Returns True/False if verification successful/failure
+
         """
 
         try:
-            return self.sig.verify(
-                message, signature, public_key
+            # Record the start time of signature generation
+            start_time = time.time()
+            
+            # Verification of user signature
+            verification = self.sig.verify(
+                challenge, signature, public_key
             )
+            # Compute the total computation time and output result
+            computation_time = (time.time() - start_time)
+            print("Verification Computation Duration: {}".format(computation_time))
+            return verification
         except:
             return False
 
 
     def display_dilithium_specs(self, variant, sig):
+        """
+        For command-line logging purposes
+        """
 
         try:            
             # Get algorithm details
@@ -103,17 +154,31 @@ class LatticeCrypto:
 def save_private_key(user_id, private_key):
     """
     Save private key to file in user local directory.
+    :param:user_id
+    :param:private_key
+    
+    :return:file_path
     """
 
+
+    # Create a directory named "client_keys" locally, if
+    # it does not already exist
     os.makedirs("client_keys", exist_ok=True)
     filepath = "client_keys/{}_sk.bin".format(user_id)
+
+    # Save the private key within a file within this directory
     with open(filepath, "wb") as f:
         f.write(private_key)
+
+    # Return the path onto the front-end for user visibility
     return os.path.join(os.getcwd(), filepath)
 
 def load_private_key(user_id):
     """Load private key from file stored in user local directory.
+    :param: user_id
+    :return: binary private key
     """
+
     try:
         with open("client_keys/{}_sk.bin".format(user_id), "rb") as f:
             return f.read()

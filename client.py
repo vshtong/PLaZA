@@ -14,20 +14,38 @@ def load_file(private_file):
         return None
 
 def sign_challenge(user_id, challenge_hex, algo_variant):
+    """
+    Client-side signature generation using the random challenge 
+    and user's fetched private key.
+
+    :param: user_id
+    :param:challenge_hex
+    :param:algo_variant
+    :return: signature
+        Returns signature in hexadecimal format
+    """
+
+    # Create a new instance object to process the challange
     crypto = LatticeCrypto(algo_variant=algo_variant)
     try:
+        # Load private key
         private_key = load_private_key(user_id)
+
+        # Error handling
         if not private_key:
             print("Private key not found")
             return None
     except:
         print("No user found, try again...")
         return None
-    #if load_file(private_key) != load_private_key(user_id):
-    #    print("Incorrect private key, try again...")
-    #    return None
+
+    # Converts from hexadecimal into bytes
     challenge = bytes.fromhex(challenge_hex)
+
+    # Generates signature from challenge and private key byte objects
     signature = crypto.sign(challenge, private_key)
+
+    # Returns signature back in hexadecimal format
     return signature.hex()
 
 if __name__ == "__main__":
