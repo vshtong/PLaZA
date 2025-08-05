@@ -38,14 +38,13 @@ def register():
         public_key, private_key = crypto.generate_keypair()
         # Store new user in database
         store_user(user_id, public_key, crypto.algorithm)
-        
         # Save private key locally on device
         f_path = save_private_key(user_id, private_key)
         #return redirect(url_for("login"))
 
         # Display template with private key file path 
         # to locate for user
-        return render_template("register.html", skey=f_path)
+        return render_template("register.html", skey=f_path, variant=crypto.algorithm)
     return render_template("register.html")
 
 @app.route("/login", methods=["GET", "POST"])
