@@ -10,6 +10,7 @@
     <form method="post" class="form">
         <label for="user_id">User ID (e.g., "test@email.com", "username23"):</label>
         {% if skey %}
+            <p style="color: #07d300;">Successful registration with selected variant "{{ variant }}".</p>
             <p style="color: #07d300;" class="skey">Your private key has been stored in your local directory: {{ skey }}</p>
         {% endif %}
         <input type="text" id="user_id" name="user_id" required  placeholder="Enter your new id here" >
