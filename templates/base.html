@@ -14,9 +14,9 @@
             <form method="post" action="{{ url_for('variant_selection') }}" class="variant-form">
                 <select name="variant_selection" onchange="this.form.submit()" aria-label="Select Dilithium Variant">
                     <option value="Auto" {% if session.get('variant_selection', 'Auto') == 'Auto' %}selected{% endif %}>Auto</option>
-                    <option value="Dilithium2" {% if session.get('variant_selection') == 'Dilithium2' %}selected{% endif %}>Dilithium2</option>
-                    <option value="Dilithium3" {% if session.get('variant_selection') == 'Dilithium3' %}selected{% endif %}>Dilithium3</option>
-                    <option value="Dilithium5" {% if session.get('variant_selection') == 'Dilithium5' %}selected{% endif %}>Dilithium5</option>
+                    <option value="ML-DSA-44" {% if session.get('variant_selection') == 'ML-DSA-44' %}selected{% endif %}>ML-DSA-44</option>
+                    <option value="ML-DSA-65" {% if session.get('variant_selection') == 'ML-DSA-65' %}selected{% endif %}>ML-DSA-65</option>
+                    <option value="ML-DSA-87" {% if session.get('variant_selection') == 'ML-DSA-87' %}selected{% endif %}>ML-DSA-87</option>
                 </select>
             </form>
         </div>

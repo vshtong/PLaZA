@@ -3,7 +3,6 @@ import os
 import time
 import numpy as np
 
-
 class LatticeCrypto:
     def __init__(self, algo_variant=None):
         """
@@ -12,7 +11,7 @@ class LatticeCrypto:
 
         # Available Dilithium variants with increasing security and computational cost
         self.avg_sign_time = None
-        self.variants = ["Dilithium2", "Dilithium3", "Dilithium5"]
+        self.variants = ["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"]
 
         # Select variant based on device performance
         if algo_variant in ["", "Auto", None]:
@@ -37,8 +36,8 @@ class LatticeCrypto:
             Returns the dilithium variant
         """
 
-        # Perform a test signing operation with Dilithium2 (fastest)
-        test_sig = Signature("Dilithium2")
+        # Perform a test signing operation with ML-DSA-44 (fastest)
+        test_sig = Signature("ML-DSA-44")
         test_message = b"test_message"
         
         # Measure signing time (average of 3 runs for reliability)
@@ -55,13 +54,13 @@ class LatticeCrypto:
 
         # Thresholds for selecting variant (in seconds, tuned for typical devices)
         if self.avg_sign_time < 0.005:  # Fast device (e.g., high-end CPU)
-            return "Dilithium5"  # Highest security, slower
+            return "ML-DSA-87"  # Highest security, slower
         
         elif self.avg_sign_time < 0.01:  # Medium device (e.g., standard laptop)
-            return "Dilithium3"  # Balanced security/performance
+            return "ML-DSA-65"  # Balanced security/performance
         
         else:  # Slow device (e.g., low-end or mobile)
-            return "Dilithium2"  # Fastest but still post-quantum secure
+            return "ML-DSA-44"  # Fastest but still post-quantum secure
 
     def generate_keypair(self):
         """

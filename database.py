@@ -1,6 +1,7 @@
 import sqlite3
 import time
 
+
 def init_db():
     """
     Initialise database with "users" and "sessions" tables.

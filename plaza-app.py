@@ -159,7 +159,7 @@ def variant_selection():
     variant = request.form.get("variant_selection", "Auto").strip()
     try:
         # Checks if selected variant is valid and returns error page if not
-        if variant != "Auto" and variant not in ["Dilithium2", "Dilithium3", "Dilithium5"]:
+        if variant != "Auto" and variant not in ["ML-DSA-44", "ML-DSA-65", "ML-DSA-87"]:
             return render_template("login.html", 
                     error="Invalid variant selected. Please choose a valid option.", 
                     current_variant=session.get("variant_selection", "Auto"))
